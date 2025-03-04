@@ -1,5 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ chantier.nom }}
+    <div class="d-flex justify-content-center">
+        <div class="show-chantier m-4 rounded p-4">
+            <button class="btn rounded-pill" style="background-color: #ff863f; opacity: 0.85;" onclick="goBack()"><i class="bi bi-arrow-left"></i></button>
+            <h3 class="text-center">{{ chantier.nom|upper }}</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="card-text"><strong>Date : </strong>{{ chantier.debutTravaux|date('d/m/Y') }} - {{ chantier.finTravaux|date('d/m/Y') }}</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <p class="card-text"><strong>Compétences :</strong></p>
+                </div>
+            </div>
+            {% if ouvriers %}
+            <div class="table-container">
+                <table class="table table-bordered text-center m-4">
+                    <thead>
+                    <tr>
+                        <th>Ouvrier</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Compétence</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ouvrier in ouvriers %}
+                        <tr>
+                            <td>{{ ouvrier.nomEmploye }} {{ ouvrier.prenomEmploye }}</td>
+                            <td>{{ ouvrier.debutMission|date('d/m/Y') }}</td>
+                            <td>{{ ouvrier.finMission|date('d/m/Y') }}</td>
+                            <td></td>
+                            <td>
+                                {{ include('mission/_delete_form.html.twig', {id: ouvrier.missionId}) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="mt-4 text-center">Pas d'ouvriers d'assignés au chantier pour le moment.</div>
+            {% endif %}
+            <button class="btn rounded-pill mr-2" style="background-color: #ff863f; opacity: 0.85;"> + Ajouter un ouvrier</button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 {% endblock %}
