@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Modifier le Chantier</h1>
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit">Modifier</button>
+{{ form_end(form) }}
+
+<h2>Employés assignés</h2>
+
+{% if employes|length > 0 %}
+    <ul>
+        {% for employe in employes %}
+            <li>{{ employe.nom }} ({{ employe.email }})</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun employé assigné.</p>
+{% endif %}
+
+
+<a href="{{ path('chantier_list') }}">Retour</a>
+
+<a href="{{ path('chantier_assign', {'id': chantier.id}) }}">Assigner des ouvriers</a>
+
+{% endblock %}

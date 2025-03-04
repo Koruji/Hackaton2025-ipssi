@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Liste des Employés</h1>
+
+<form method="get" action="{{ path('employe_list') }}">
+    <label for="competence">Filtrer par compétence :</label>
+    <select name="competence" id="competence">
+        <option value="">Toutes</option>
+        {% for competence in competences %}
+            <option value="{{ competence.id }}">{{ competence.nom }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrer</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Compétences</th>
+    </tr>
+    {% for employe in employes %}
+    <tr>
+        <td>{{ employe.nom }}</td>
+        <td>{{ employe.email }}</td>
+        <td>
+            {% for competence in employe.competences %}
+                {{ competence.nom }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{{ path('chantier_list') }}">Retour aux chantiers</a>
+{% endblock %}
