@@ -30,12 +30,16 @@ class Chantier
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
+    
 
     /**
      * @var Collection<int, Mission>
      */
     #[ORM\OneToMany(targetEntity: Mission::class, mappedBy: 'chantier')]
     private Collection $missions;
+
+    #[ORM\ManyToMany(targetEntity: Employes::class)]
+    private Collection $employes;
 
     public function __construct()
     {
@@ -134,6 +138,25 @@ class Chantier
             }
         }
 
+        return $this;
+    }
+
+    public function getEmployes(): Collection
+    {
+        return $this->employes;
+    }
+
+    public function addEmploye(Employe $employe): self
+    {
+        if (!$this->employes->contains($employe)) {
+            $this->employes->add($employe);
+        }
+        return $this;
+    }
+
+    public function removeEmploye(Employe $employe): self
+    {
+        $this->employes->removeElement($employe);
         return $this;
     }
 }

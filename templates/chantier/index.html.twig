@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Liste des Chantiers</h1>
+
+<a href="{{ path('chantier_add') }}">Nouveau Chantier</a>
+
+<table border="1">
+    <tr>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Début</th>
+        <th>Fin</th>
+        <th>Statut</th>
+        <th>Actions</th>
+    </tr>
+    {% for chantier in chantiers %}
+    <tr>
+        <td>{{ chantier.nom }}</td>
+        <td>{{ chantier.adresse }}</td>
+        <td>{{ chantier.debutTravaux|date('d/m/Y') }}</td>
+        <td>{{ chantier.finTravaux|date('d/m/Y') }}</td>
+        <td>{{ chantier.status }}</td>
+        <td>
+            <a href="{{ path('chantier_edit', {'id': chantier.id}) }}">Modifier</a> |
+            <a href="{{ path('chantier_delete', {'id': chantier.id}) }}" onclick="return confirm('Supprimer ce chantier ?');">Supprimer</a> |
+            <a href="{{ path('chantier_status', {'id': chantier.id}) }}">
+                {% if chantier.status == 'Fini' %}
+                    Marquer comme "En cours"
+                {% else %}
+                    Marquer comme "Fini"
+                {% endif %}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

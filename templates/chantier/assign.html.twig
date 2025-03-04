@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Assigner des ouvriers au chantier : {{ chantier.nom }}</h1>
+
+<form method="post" action="{{ path('chantier_assign', {'id': chantier.id}) }}">
+    {% for employe in employes %}
+        <input type="checkbox" name="employes[]" value="{{ employe.id }}"
+               {% if employe in chantier.employes %}checked{% endif %}>
+        {{ employe.nom }} <br>
+    {% endfor %}
+    <button type="submit">Assigner</button>
+</form>
+
+<a href="{{ path('chantier_edit', {'id': chantier.id}) }}">Retour</a>
+{% endblock %}
