@@ -8,9 +8,9 @@ Ce projet a pour objectif de proposer une solution permettant d’optimiser et d
 
 * Multiples affectations des salariés : De nombreux employés sont assignés à plusieurs chantiers en même temps. Cela crée des conflits d'horaires et entraîne des retards. La gestion actuelle des plannings n'est pas optimisée et engendre une surcharge de travail.
 
-* Inadéquation des compétences et des besoins des chantiers : Les chantiers ne correspondent pas toujours aux compétences spécifiques des employés. Cela impacte la qualité du travail, la sécurité et l'efficacité des projets. La planification ne prend pas suffisamment en compte les profils et compétences des salariés.
+* Inadéquation des compétences et des besoins : Les chantiers ne sont pas toujours adaptés aux compétences des employés, ce qui affecte la qualité, la sécurité et l'efficacité du travail. La planification ne tient pas suffisamment compte des profils des salariés.
 
-* Gestion administrative complexe : L'affectation des salariés nécessite une gestion administrative lourde et source d'erreurs. Cela ralentit les processus et peut entraîner des erreurs de planification, affectant ainsi la productivité globale.
+* Gestion administrative complexe : L'affectation des salariés nécessite une gestion administrative lourde et la moindre erreur peut entraîner des erreurs de planification, affectant ainsi la productivité globale.
 
 ### Fonctionnalités réalisées
 
