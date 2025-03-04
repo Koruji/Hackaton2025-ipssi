@@ -1,7 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
 {% block body %}
-
+    <h2 class="text-center">Chantiers disponibles</h2>
+    <div class="chantier-container m-4 rounded">
+        {% for chantier in chantiers %}
+        <a href="{{ path('show_chantier', { 'id': chantier.id }) }}" style="text-decoration: none; color: inherit;">
+            <div class="card chantiers">
+                <h6 class="card-title">{{ chantier.nom|upper }}</h6>
+                <div class="card-body">
+                    <span>{{ chantier.adresse }}</span>
+                    <p>{{ chantier.debutTravaux|date('d/m/Y') }} - {{ chantier.finTravaux|date('d/m/Y') }}</p>
+                </div>
+                <span class="badge" style="position: absolute; bottom: 10px; right: 10px; font-size: 15px; padding: 5px;">
+                    {% if chantier.status %} {{ chantier.status }} {% endif %}
+                </span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 {% endblock %}
