@@ -12,3 +12,18 @@ body {
     margin-top: 50px;
 }
 
+.chantier-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 20px;
+    background-color: white;
+    opacity: 0.70;
+}
+
+.chantiers {
+    background-color: #F2BE23;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
