@@ -24,9 +24,16 @@ class Competence
     #[ORM\ManyToMany(targetEntity: Employes::class, mappedBy: 'competence')]
     private Collection $employes;
 
+    /**
+     * @var Collection<int, Chantier>
+     */
+    #[ORM\ManyToMany(targetEntity: Chantier::class, mappedBy: 'competences')]
+    private Collection $chantiers;
+
     public function __construct()
     {
         $this->employes = new ArrayCollection();
+        $this->chantiers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,6 +75,33 @@ class Competence
     {
         if ($this->employes->removeElement($employe)) {
             $employe->removeCompetence($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chantier>
+     */
+    public function getChantiers(): Collection
+    {
+        return $this->chantiers;
+    }
+
+    public function addChantier(Chantier $chantier): static
+    {
+        if (!$this->chantiers->contains($chantier)) {
+            $this->chantiers->add($chantier);
+            $chantier->addCompetence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChantier(Chantier $chantier): static
+    {
+        if ($this->chantiers->removeElement($chantier)) {
+            $chantier->removeCompetence($this);
         }
 
         return $this;
