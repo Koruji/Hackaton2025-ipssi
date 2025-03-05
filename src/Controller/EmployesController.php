@@ -32,6 +32,9 @@ final class EmployesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $employe->setRoles(['ROLE_USER']);
             $employe->setDisponible(true);
+            // $plainPassword = $form->get('password')->getData();
+            // $employe->setPassword($userPasswordHasher->hashPassword($employe, $plainPassword));
+            $employe->setPassword($form->get('password')->getData());
             $entityManager->persist($employe);
             $entityManager->flush();
 
@@ -61,7 +64,7 @@ final class EmployesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_employes_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_ouvrier', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('employes/edit.html.twig', [
@@ -78,6 +81,6 @@ final class EmployesController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_employes_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_ouvrier', [], Response::HTTP_SEE_OTHER);
     }
 }
