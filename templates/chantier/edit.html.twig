@@ -5,9 +5,6 @@
 {% block body %}
     <h1>Edit Chantier</h1>
 
-    {{ include('chantier/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('chantier/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
 
-    <a href="{{ path('app_chantier_index') }}">back to list</a>
-
-    {{ include('chantier/_delete_form.html.twig') }}
 {% endblock %}

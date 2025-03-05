@@ -23,7 +23,7 @@
             {% block header %}{% endblock %}
 
             {% if app.user %}
-                <a href="/" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des chantiers</a>
+                <a href="{{path('app_admin_chantier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des chantiers</a>
                 <a href="{{path('app_admin_ouvrier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des ouvriers</a>
                 <a href="{{ path('app_logout') }}" class="nav-item btn rounded-pill" style="background-color: #560202; opacity: 0.85; color: white">Se déconnecter</a>
             {% endif %}

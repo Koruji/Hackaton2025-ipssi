@@ -23,11 +23,6 @@ class ChantierType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('status')
-            ->add('employes', EntityType::class, [
-                'class' => Employes::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
         ;
     }
 

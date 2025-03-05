@@ -35,10 +35,8 @@
                         </span>
                     </td>
                     <td>
-                        <a href="/" class="btn btn-sm btn-warning">Modifier</a>
-                        <form action="/" method="POST" class="d-inline">
-{#                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cet ouvrier ?');">Supprimer</button>#}
-                        </form>
+                        <a href="{{ path('app_employes_edit', {'id': employe.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        {{ include('employes/_delete_form.html.twig') }}
                     </td>
                 </tr>
                 {% else %}

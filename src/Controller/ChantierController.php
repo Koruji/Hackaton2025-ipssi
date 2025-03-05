@@ -45,7 +45,7 @@ final class ChantierController extends AbstractController
             $entityManager->persist($chantier);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_chantier', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('chantier/new.html.twig', [
@@ -63,7 +63,7 @@ final class ChantierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_chantier', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('chantier/edit.html.twig', [
@@ -80,6 +80,6 @@ final class ChantierController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_chantier', [], Response::HTTP_SEE_OTHER);
     }
 }
