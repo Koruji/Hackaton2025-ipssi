@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chantier;
+use App\Entity\Employes;
 use App\Form\ChantierType;
 use App\Repository\ChantierRepository;
 use Doctrine\ORM\EntityManagerInterface;
