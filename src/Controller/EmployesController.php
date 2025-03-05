@@ -2,64 +2,82 @@
 
 namespace App\Controller;
 
-use App\Entity\Chantier;
 use App\Entity\Employes;
-use App\Entity\Competence;
+use App\Form\EmployesType;
+use App\Repository\EmployesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/employes')]
 final class EmployesController extends AbstractController
 {
-    #[Route('/employes', name: 'employe_list')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    #[Route(name: 'app_employes_index', methods: ['GET'])]
+    public function index(EmployesRepository $employesRepository): Response
     {
-        $competenceId = $request->query->get('competence');
-
-        $competences = $em->getRepository(Competence::class)->findAll();
-        $query = $em->getRepository(Employes::class)->createQueryBuilder('e');
-
-        if ($competenceId) {
-            $query->join('e.competences', 'c')
-                  ->where('c.id = :competenceId')
-                  ->setParameter('competenceId', $competenceId);
-        }
-
-        $employes = $query->getQuery()->getResult();
-
-        return $this->render('employe/index.html.twig', [
-            'employes' => $employes,
-            'competences' => $competences,
+        return $this->render('employes/index.html.twig', [
+            'employes' => $employesRepository->findAll(),
         ]);
     }
 
-    // #[Route('/chantier/{id}/assigner', name: 'chantier_assign')]
-    // public function assigner(Chantier $chantier, EntityManagerInterface $em): Response
-    // {
-    //     $employes = $em->getRepository(Employes::class)->findAll();
-
-    //     return $this->render('chantier/assign.html.twig', [
-    //         'chantier' => $chantier,
-    //         'employes' => $employes
-    //     ]);
-    // }
-
-    #[Route('/chantier/{id}/assigner/save', name: 'chantier_assign_save', methods: ['POST'])]
-    public function assignerSave(Request $request, Chantier $chantier, EntityManagerInterface $em): Response
+    #[Route('/new', name: 'app_employes_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $employeIds = $request->request->get('employes', []);
-        $employes = $em->getRepository(Employes::class)->findBy(['id' => $employeIds]);
+        $employe = new Employes();
+        $form = $this->createForm(EmployesType::class, $employe);
+        $form->handleRequest($request);
 
-        foreach ($employes as $employe) {
-            // Ici, tu peux ajouter une entité "Mission" si nécessaire
-            // Sinon, ajouter les employés directement au chantier
-            // Exemple : $chantier->addEmploye($employe);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $employe->setRoles(['ROLE_USER']);
+            $employe->setDisponible(true);
+            $entityManager->persist($employe);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_admin_ouvrier', [], Response::HTTP_SEE_OTHER);
         }
 
-        $em->flush();
+        return $this->render('employes/new.html.twig', [
+            'employe' => $employe,
+            'form' => $form,
+        ]);
+    }
 
-        return $this->redirectToRoute('chantier_list');
+    #[Route('/{id}', name: 'app_employes_show', methods: ['GET'])]
+    public function show(Employes $employe): Response
+    {
+        return $this->render('employes/show.html.twig', [
+            'employe' => $employe,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_employes_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Employes $employe, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(EmployesType::class, $employe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_employes_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('employes/edit.html.twig', [
+            'employe' => $employe,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_employes_delete', methods: ['POST'])]
+    public function delete(Request $request, Employes $employe, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$employe->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($employe);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_employes_index', [], Response::HTTP_SEE_OTHER);
     }
 }

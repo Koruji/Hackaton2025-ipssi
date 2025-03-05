@@ -1,28 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Edit Chantier{% endblock %}
+
 {% block body %}
-<h1>Modifier le Chantier</h1>
+    <h1>Edit Chantier</h1>
 
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<button type="submit">Modifier</button>
-{{ form_end(form) }}
+    {{ include('chantier/_form.html.twig', {'button_label': 'Update'}) }}
 
-<h2>Employés assignés</h2>
+    <a href="{{ path('app_chantier_index') }}">back to list</a>
 
-{% if employes|length > 0 %}
-    <ul>
-        {% for employe in employes %}
-            <li>{{ employe.nom }} ({{ employe.email }})</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucun employé assigné.</p>
-{% endif %}
-
-
-<a href="{{ path('chantier_list') }}">Retour</a>
-
-<a href="{{ path('chantier_assign', {'id': chantier.id}) }}">Assigner des ouvriers</a>
-
+    {{ include('chantier/_delete_form.html.twig') }}
 {% endblock %}
