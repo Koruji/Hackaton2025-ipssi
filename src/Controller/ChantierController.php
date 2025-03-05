@@ -12,10 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-
 use App\Repository\CompetenceRepository;
 use App\Entity\Competence;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 final class ChantierController extends AbstractController
 {
