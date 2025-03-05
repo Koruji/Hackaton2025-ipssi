@@ -16,12 +16,15 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ChantierController extends AbstractController
 {
     #[Route('/chantier/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
-    public function show(EntityManagerInterface $em, $id): Response
+    public function show(EntityManagerInterface $em, $id, ChantierRepository $chantierRepository): Response
     {
+        $competences = $em->getRepository(Chantier::class)->findCompetencesByChantierId($id);
+
         $chantier = $em->getRepository(Chantier::class)->find($id);
         $ouvriers = $em->getRepository(Employes::class)->findEmployesByChantierId($id);
         return $this->render('chantier/show.html.twig', [
             'chantier' => $chantier,
+            'competences' => $competences,
             'ouvriers' => $ouvriers
         ]);
     }

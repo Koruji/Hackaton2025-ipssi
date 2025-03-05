@@ -16,6 +16,20 @@ class ChantierRepository extends ServiceEntityRepository
         parent::__construct($registry, Chantier::class);
     }
 
+    
+    public function findCompetencesByChantierId(int $chantierId): array
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.competences', 'm')
+            ->innerJoin('m.chantiers', 'c')
+            ->where('c.id = :chantierId')
+            ->setParameter('chantierId', $chantierId)
+            ->select('m.nom AS competence_nom', 'm.id AS competence_id', 'c.nom AS chantier_nom')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     //    /**
     //     * @return Chantier[] Returns an array of Chantier objects
     //     */

@@ -62,6 +62,10 @@ final class EmployesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $employe->setNom($form->get('nom')->getData());
+            $employe->setPrenom($form->get('prenom')->getData());
+            $employe->setEmail($form->get('email')->getData());
+            $employe->setPassword($employe->getPassword());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_admin_ouvrier', [], Response::HTTP_SEE_OTHER);

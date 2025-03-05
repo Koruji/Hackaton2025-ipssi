@@ -45,16 +45,18 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $disponible = null;
 
     /**
+     * @var Collection<int, Competence>
+     */
+    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'employes')]
+    #[ORM\JoinTable(name: 'employes_competence')]
+    private Collection $competence;
+
+    /**
      * @var Collection<int, Mission>
      */
     #[ORM\OneToMany(targetEntity: Mission::class, mappedBy: 'employe')]
     private Collection $missions;
 
-    /**
-     * @var Collection<int, Competence>
-     */
-    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'employes')]
-    private Collection $competence;
 
     public function __construct()
     {
@@ -203,10 +205,7 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Competence>
-     */
-    public function getCompetence(): Collection
+    public function getCompetences(): Collection
     {
         return $this->competence;
     }
@@ -226,4 +225,5 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }

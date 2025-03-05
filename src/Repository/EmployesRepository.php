@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Employes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -51,7 +52,8 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
             ->getResult();
     }
 
-    public function findEmployesByRoleOuvrier(): array
+
+    public function findAllEmployesByCompetence(array $required_competences): array
     {
         return $this->createQueryBuilder('e')
             ->where('e.roles LIKE :role')
@@ -62,9 +64,17 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
     {
         return $this->createQueryBuilder('e')
             ->where('e.roles LIKE :role')
-            ->setParameter('role', '%ROLE_USER%')
+            ->setParameter('role', '%ROLE_USER%') 
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();  
+    }
+
+
+    public function findEmployesByRoleOuvrier(): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.roles LIKE :role')
+            ->setParameter('role', '%ROLE_USER%');
     }
 
     //    /**
@@ -82,13 +92,5 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Employes
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
 }
