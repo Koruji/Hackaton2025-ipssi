@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Employes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -51,13 +52,11 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
             ->getResult();
     }
 
-    public function findEmployesByRoleOuvrier(): array
+    public function findEmployesByRoleOuvrier(): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->where('e.roles LIKE :role')
-            ->setParameter('role', '%ROLE_USER%')
-            ->getQuery()
-            ->getResult();
+            ->setParameter('role', '%ROLE_USER%');
     }
 
     //    /**

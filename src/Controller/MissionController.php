@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Chantier;
 use App\Entity\Mission;
 use App\Form\MissionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,22 +14,25 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/mission')]
 final class MissionController extends AbstractController
 {
-    #[Route('/new', name: 'app_mission_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_mission_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
         $mission = new Mission();
+        $chantierAssocie = $entityManager->getRepository(Chantier::class)->find($id);
         $form = $this->createForm(MissionType::class, $mission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $mission->setChantier($chantierAssocie);
             $entityManager->persist($mission);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_mission_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('show_chantier', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('mission/new.html.twig', [
             'mission' => $mission,
+            'id' => $id,
             'form' => $form,
         ]);
     }
