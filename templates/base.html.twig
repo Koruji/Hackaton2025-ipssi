@@ -15,16 +15,26 @@
     </head>
     <body>
     <nav class="navbar sticky-top shadow m-3" style="background-color: #ff863f; opacity: 0.85;">
-        <a class="navbar-brand" style="font-size: 20px;">
-            <i class="bi bi-building-fill-gear"></i>
-            <strong>BatiCrew</strong>
-        </a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_home_admin') }}" class="navbar-brand" style="font-size: 20px; text-decoration: none; color: inherit;">
+                <i class="bi bi-building-fill-gear"></i>
+                <strong>BatiCrew</strong>
+            </a>
+        {% else %}
+            <a href="/" class="navbar-brand" style="font-size: 20px; text-decoration: none; color: inherit;">
+                <i class="bi bi-building-fill-gear"></i>
+                <strong>BatiCrew</strong>
+            </a>
+        {% endif %}
+
         <div class="d-flex">
             {% block header %}{% endblock %}
 
             {% if app.user %}
-                <a href="{{path('app_admin_chantier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des chantiers</a>
-                <a href="{{path('app_admin_ouvrier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des ouvriers</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{path('app_admin_chantier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des chantiers</a>
+                    <a href="{{path('app_admin_ouvrier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des ouvriers</a>
+                {% endif %}
                 <a href="{{ path('app_logout') }}" class="nav-item btn rounded-pill" style="background-color: #560202; opacity: 0.85; color: white">Se déconnecter</a>
             {% endif %}
         </div>
