@@ -17,7 +17,6 @@
         <table class="table table-bordered text-center bg-white mt-3">
             <thead class="thead-light">
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Adresse</th>
                     <th>Début</th>
@@ -29,7 +28,6 @@
             <tbody>
                 {% for chantier in chantiers %}
                 <tr>
-                    <td>{{ chantier.id }}</td>
                     <td>{{ chantier.nom }}</td>
                     <td>{{ chantier.adresse }}</td>
                     <td>{{ chantier.debutTravaux ? chantier.debutTravaux|date('d/m/Y') : '-' }}</td>
