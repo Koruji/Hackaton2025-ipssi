@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/chantier')]
 final class ChantierController extends AbstractController
 {
-    #[Route('/chantier/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
+    #[Route('/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
     public function show(EntityManagerInterface $em, $id): Response
     {
         $chantier = $em->getRepository(Chantier::class)->find($id);
