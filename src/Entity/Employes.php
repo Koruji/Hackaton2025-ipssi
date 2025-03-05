@@ -49,7 +49,7 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'employes')]
     #[ORM\JoinTable(name: 'employes_competence')]
-    private Collection $competences;
+    private Collection $competence;
 
     /**
      * @var Collection<int, Mission>
@@ -61,7 +61,7 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->missions = new ArrayCollection();
-        $this->competences = new ArrayCollection();
+        $this->competence = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,13 +207,13 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getCompetences(): Collection
     {
-        return $this->competences;
+        return $this->competence;
     }
 
     public function addCompetence(Competence $competence): static
     {
-        if (!$this->competences->contains($competence)) {
-            $this->competences->add($competence);
+        if (!$this->competence->contains($competence)) {
+            $this->competence->add($competence);
         }
 
         return $this;
@@ -221,7 +221,7 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeCompetence(Competence $competence): static
     {
-        $this->competences->removeElement($competence);
+        $this->competence->removeElement($competence);
 
         return $this;
     }
