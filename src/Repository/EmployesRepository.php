@@ -33,6 +33,24 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Récupère tous les employés présents sur un chantier donné avec les informations de dates.
+     *
+     * @param int $chantierId
+     * @return array
+     */
+    public function findEmployesByChantierId(int $chantierId): array
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.missions', 'm')
+            ->innerJoin('m.chantier', 'c')
+            ->where('c.id = :chantierId')
+            ->setParameter('chantierId', $chantierId)
+            ->select('e.nom as nomEmploye', 'e.prenom as prenomEmploye', 'm.dateDebut as debutMission', 'm.dateFin as finMission', 'm.id as missionId')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Employes[] Returns an array of Employes objects
     //     */

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Chantier;
 use App\Entity\Employes;
 use App\Controller\EmployesController;
+use App\Entity\Mission;
 use App\Form\ChantierType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,19 +20,10 @@ final class ChantierController extends AbstractController
     public function show(EntityManagerInterface $em, $id): Response
     {
         $chantier = $em->getRepository(Chantier::class)->find($id);
-
+        $ouvriers = $em->getRepository(Employes::class)->findEmployesByChantierId($id);
         return $this->render('chantier/show.html.twig', [
             'chantier' => $chantier,
-        ]);
-    }
-
-    #[Route('/chantiers', name: 'chantier_list')]
-    public function index(EntityManagerInterface $em): Response
-    {
-        $chantiers = $em->getRepository(Chantier::class)->findAll();
-
-        return $this->render('chantier/index.html.twig', [
-            'chantiers' => $chantiers,
+            'ouvriers' => $ouvriers
         ]);
     }
 
