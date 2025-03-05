@@ -1,37 +1,45 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Employes index{% endblock %}
+
 {% block body %}
-<h1>Liste des Employés</h1>
+    <h1>Employes index</h1>
 
-<form method="get" action="{{ path('employe_list') }}">
-    <label for="competence">Filtrer par compétence :</label>
-    <select name="competence" id="competence">
-        <option value="">Toutes</option>
-        {% for competence in competences %}
-            <option value="{{ competence.id }}">{{ competence.nom }}</option>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Disponible</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employe in employes %}
+            <tr>
+                <td>{{ employe.id }}</td>
+                <td>{{ employe.email }}</td>
+                <td>{{ employe.roles ? employe.roles|json_encode : '' }}</td>
+                <td>{{ employe.password }}</td>
+                <td>{{ employe.nom }}</td>
+                <td>{{ employe.prenom }}</td>
+                <td>{{ employe.disponible ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_employes_show', {'id': employe.id}) }}">show</a>
+                    <a href="{{ path('app_employes_edit', {'id': employe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
         {% endfor %}
-    </select>
-    <button type="submit">Filtrer</button>
-</form>
+        </tbody>
+    </table>
 
-<table border="1">
-    <tr>
-        <th>Nom</th>
-        <th>Email</th>
-        <th>Compétences</th>
-    </tr>
-    {% for employe in employes %}
-    <tr>
-        <td>{{ employe.nom }}</td>
-        <td>{{ employe.email }}</td>
-        <td>
-            {% for competence in employe.competences %}
-                {{ competence.nom }}{% if not loop.last %}, {% endif %}
-            {% endfor %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-
-<a href="{{ path('chantier_list') }}">Retour aux chantiers</a>
+    <a href="{{ path('app_employes_new') }}">Create new</a>
 {% endblock %}

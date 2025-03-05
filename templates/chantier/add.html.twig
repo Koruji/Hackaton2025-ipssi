@@ -1,12 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Ajouter un Chantier</h1>
+<div class="container mt-4">
+    <div class="p-4 bg-white shadow rounded">
+        <h1 class="fw-bold text-center">Ajouter un Chantier</h1>
 
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<button type="submit">Ajouter</button>
-{{ form_end(form) }}
+        <div class="mt-3">
+            {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+                <div class="mb-3">
+                    {{ form_widget(form) }}
+                </div>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+            {{ form_end(form) }}
+        </div>
 
-<a href="{{ path('chantier_list') }}">Retour</a>
+        <div class="mt-3">
+            <a href="{{ path('chantier_list') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

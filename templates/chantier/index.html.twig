@@ -1,38 +1,58 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Liste des Chantiers</h1>
+<div class="container mt-4">
+    <div class="p-4 bg-white shadow rounded">
+        <h1 class="fw-bold text-center">Liste des Chantiers</h1>
 
-<a href="{{ path('chantier_add') }}">Nouveau Chantier</a>
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <a href="{{ path('chantier_add') }}" class="btn btn-primary">Nouveau Chantier</a>
+        </div>
 
-<table border="1">
-    <tr>
-        <th>Nom</th>
-        <th>Adresse</th>
-        <th>Début</th>
-        <th>Fin</th>
-        <th>Statut</th>
-        <th>Actions</th>
-    </tr>
-    {% for chantier in chantiers %}
-    <tr>
-        <td>{{ chantier.nom }}</td>
-        <td>{{ chantier.adresse }}</td>
-        <td>{{ chantier.debutTravaux|date('d/m/Y') }}</td>
-        <td>{{ chantier.finTravaux|date('d/m/Y') }}</td>
-        <td>{{ chantier.status }}</td>
-        <td>
-            <a href="{{ path('chantier_edit', {'id': chantier.id}) }}">Modifier</a> |
-            <a href="{{ path('chantier_delete', {'id': chantier.id}) }}" onclick="return confirm('Supprimer ce chantier ?');">Supprimer</a> |
-            <a href="{{ path('chantier_status', {'id': chantier.id}) }}">
-                {% if chantier.status == 'Fini' %}
-                    Marquer comme "En cours"
+        <table class="table table-bordered text-center bg-white mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chantier in chantiers %}
+                <tr>
+                    <td>{{ chantier.nom }}</td>
+                    <td>{{ chantier.adresse }}</td>
+                    <td>{{ chantier.debutTravaux|date('d/m/Y') }}</td>
+                    <td>{{ chantier.finTravaux|date('d/m/Y') }}</td>
+                    <td>
+                        <span class="badge {% if chantier.status == 'Fini' %}bg-success{% else %}bg-warning{% endif %}">
+                            {{ chantier.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ path('chantier_edit', {'id': chantier.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        <a href="{{ path('chantier_delete', {'id': chantier.id}) }}" 
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Supprimer ce chantier ?');">Supprimer</a>
+                        <a href="{{ path('chantier_status', {'id': chantier.id}) }}" class="btn btn-sm btn-info">
+                            {% if chantier.status == 'Fini' %}
+                                Marquer comme "En cours"
+                            {% else %}
+                                Marquer comme "Fini"
+                            {% endif %}
+                        </a>
+                    </td>
+                </tr>
                 {% else %}
-                    Marquer comme "Fini"
-                {% endif %}
-            </a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+                <tr>
+                    <td colspan="6" class="text-center text-muted">Aucun chantier trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

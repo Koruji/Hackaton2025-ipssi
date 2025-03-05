@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="p-4 bg-white shadow rounded">
+        <h1 class="fw-bold text-center">Liste des Employés</h1>
+
+        <form method="get" action="{{ path('employe_list') }}" class="my-3">
+            <label for="competence" class="fw-bold">Filtrer par compétence :</label>
+            <select name="competence" id="competence" class="form-select w-25 d-inline-block">
+                <option value="">Toutes</option>
+                {% for competence in competences %}
+                    <option value="{{ competence.id }}">{{ competence.nom }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </form>
+
+        <table class="table table-bordered text-center bg-white mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Compétences</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employe in employes %}
+                <tr>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.email }}</td>
+                    <td>
+                        {% for competence in employe.getCompetences() %}
+                            {{ competence.nom }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">Aucun employé trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('chantier_list') }}" class="btn btn-secondary">Retour aux chantiers</a>
+    </div>
+</div>
+{% endblock %}
