@@ -1,38 +1,43 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Chantier index{% endblock %}
+
 {% block body %}
-<h1>Liste des Chantiers</h1>
+    <h1>Chantier index</h1>
 
-<a href="{{ path('chantier_add') }}">Nouveau Chantier</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>DebutTravaux</th>
+                <th>FinTravaux</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chantier in chantiers %}
+            <tr>
+                <td>{{ chantier.id }}</td>
+                <td>{{ chantier.nom }}</td>
+                <td>{{ chantier.adresse }}</td>
+                <td>{{ chantier.debutTravaux ? chantier.debutTravaux|date('Y-m-d') : '' }}</td>
+                <td>{{ chantier.finTravaux ? chantier.finTravaux|date('Y-m-d') : '' }}</td>
+                <td>{{ chantier.status }}</td>
+                <td>
+                    <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}">show</a>
+                    <a href="{{ path('app_chantier_edit', {'id': chantier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<table border="1">
-    <tr>
-        <th>Nom</th>
-        <th>Adresse</th>
-        <th>Début</th>
-        <th>Fin</th>
-        <th>Statut</th>
-        <th>Actions</th>
-    </tr>
-    {% for chantier in chantiers %}
-    <tr>
-        <td>{{ chantier.nom }}</td>
-        <td>{{ chantier.adresse }}</td>
-        <td>{{ chantier.debutTravaux|date('d/m/Y') }}</td>
-        <td>{{ chantier.finTravaux|date('d/m/Y') }}</td>
-        <td>{{ chantier.status }}</td>
-        <td>
-            <a href="{{ path('chantier_edit', {'id': chantier.id}) }}">Modifier</a> |
-            <a href="{{ path('chantier_delete', {'id': chantier.id}) }}" onclick="return confirm('Supprimer ce chantier ?');">Supprimer</a> |
-            <a href="{{ path('chantier_status', {'id': chantier.id}) }}">
-                {% if chantier.status == 'Fini' %}
-                    Marquer comme "En cours"
-                {% else %}
-                    Marquer comme "Fini"
-                {% endif %}
-            </a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+    <a href="{{ path('app_chantier_new') }}">Create new</a>
 {% endblock %}

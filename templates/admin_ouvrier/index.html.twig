@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="p-4 bg-white shadow rounded">
+        <h1 class="fw-bold text-center">Gestion des Ouvriers</h1>
+
+        <div class="d-flex justify-content-between my-3">
+            <a href="{{path('app_employes_new')}}" class="btn btn-primary">Ajouter un Ouvrier</a>
+        </div>
+
+        <table class="table table-bordered text-center bg-white mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Compétences</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employe in employes %}
+                <tr>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.email }}</td>
+                    <td>
+                        {% for competence in employe.getCompetence() %}
+                            {{ competence.nom }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <span class="badge {% if employe.disponible %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if employe.disponible %} Disponible {% else %} Indisponible {% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/" class="btn btn-sm btn-warning">Modifier</a>
+                        <form action="/" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cet ouvrier ?');">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">Aucun ouvrier trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
