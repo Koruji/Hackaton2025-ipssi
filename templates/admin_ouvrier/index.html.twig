@@ -13,6 +13,7 @@
             <thead class="thead-light">
                 <tr>
                     <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
                     <th>Compétences</th>
                     <th>Statut</th>
@@ -23,6 +24,7 @@
                 {% for employe in employes %}
                 <tr>
                     <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
                     <td>{{ employe.email }}</td>
                     <td>
                         {% for competence in employe.getCompetence() %}
@@ -35,7 +37,9 @@
                         </span>
                     </td>
                     <td>
-                        <a href="{{ path('app_employes_edit', {'id': employe.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        <a href="{{ path('app_employes_edit', {'id': employe.id}) }}" class="btn btn-sm btn-warning">
+                            Modifier
+                        </a>
                         {{ include('employes/_delete_form.html.twig') }}
                     </td>
                 </tr>
