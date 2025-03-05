@@ -43,6 +43,7 @@
             {% else %}
                 <div class="mt-4 text-center">Pas d'ouvriers d'assignés au chantier pour le moment.</div>
             {% endif %}
+
             <a href="{{ path('app_mission_new', {'id': chantier.id}) }}" class="btn rounded-pill mr-2" style="background-color: #ff863f; opacity: 0.85;"> + Ajouter un ouvrier</a>
         </div>
     </div>
