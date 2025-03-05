@@ -25,7 +25,7 @@
                     <td>{{ employe.nom }}</td>
                     <td>{{ employe.email }}</td>
                     <td>
-                        {% for competence in employe.getCompetence() %}
+                        {% for competence in employe.getCompetences() %}
                             {{ competence.nom }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </td>
