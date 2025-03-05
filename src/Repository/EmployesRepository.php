@@ -57,7 +57,7 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
     {
         return $this->createQueryBuilder('e')
             ->select('e.nom AS employe_nom, e.id')  
-            ->join('e.competences', 'c')  
+            ->join('e.competence', 'c')  
             ->where('c.nom IN (:competences)') 
             ->setParameter('competences', $required_competences)  
             ->getQuery()
