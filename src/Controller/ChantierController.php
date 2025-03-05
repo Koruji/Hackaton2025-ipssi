@@ -4,22 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Chantier;
 use App\Entity\Employes;
-use App\Controller\EmployesController;
-use App\Entity\Mission;
 use App\Form\ChantierType;
+use App\Repository\ChantierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\EmployesRepository;
 use App\Entity\Competence;
 
+#[Route('/chantier')]
 final class ChantierController extends AbstractController
 {
+  
+    #[Route('/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
+    public function show(EntityManagerInterface $em, $id): Response
 
-    #[Route('/chantier/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
-    public function show(EntityManagerInterface $em, $id, EmployesRepository $employesRepository): Response
     {
         //données statique : à remplacer par les vraies
         $required_competences = ["Électricité", "Travaux de finition"];
@@ -37,85 +38,60 @@ final class ChantierController extends AbstractController
         ]);
     }
 
-    #[Route('/chantier/ajouter', name: 'chantier_add')]
-    public function add(Request $request, EntityManagerInterface $em): Response
+    #[Route(name: 'app_chantier_index', methods: ['GET'])]
+    public function index(ChantierRepository $chantierRepository): Response
+    {
+        return $this->render('chantier/index.html.twig', [
+            'chantiers' => $chantierRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/new', name: 'app_chantier_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $chantier = new Chantier();
         $form = $this->createForm(ChantierType::class, $chantier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($chantier);
-            $em->flush();
-            return $this->redirectToRoute('chantier_list');
+            $entityManager->persist($chantier);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('chantier/add.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('chantier/new.html.twig', [
+            'chantier' => $chantier,
+            'form' => $form,
         ]);
     }
 
-    #[Route('/chantier/supprimer/{id}', name: 'chantier_delete')]
-    public function delete(Chantier $chantier, EntityManagerInterface $em): Response
-    {
-        $em->remove($chantier);
-        $em->flush();
-        return $this->redirectToRoute('chantier_list');
-    }
-
-    #[Route('/chantier/modifier/{id}', name: 'chantier_edit')]
-    public function edit(Request $request, Chantier $chantier, EntityManagerInterface $em): Response
+    #[Route('/{id}/edit', name: 'app_chantier_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Chantier $chantier, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ChantierType::class, $chantier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            return $this->redirectToRoute('chantier_list');
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('chantier/edit.html.twig', [
-            'form' => $form->createView(),
             'chantier' => $chantier,
-            'employes' => $chantier->getEmployes(),
+            'form' => $form,
         ]);
     }
 
-    #[Route('/chantier/statut/{id}', name: 'chantier_status')]
-    public function updateStatus(Chantier $chantier, EntityManagerInterface $em): Response
+    #[Route('/{id}', name: 'app_chantier_delete', methods: ['POST'])]
+    public function delete(Request $request, Chantier $chantier, EntityManagerInterface $entityManager): Response
     {
-        $chantier->setStatus($chantier->getStatus() === 'Fini' ? 'En cours' : 'Fini');
-        $em->flush();
-
-        return $this->redirectToRoute('chantier_list');
-    }
-
-    #[Route('/chantier/{id}/assigner', name: 'chantier_assign', methods: ['GET', 'POST'])]
-    public function assigner(Request $request, Chantier $chantier, EntityManagerInterface $em): Response
-    {
-        $employes = $em->getRepository(Employes::class)->findAll();
-
-        if ($request->isMethod('POST')) {
-            $employeIds = $request->request->get('employes');
-            
-            $selectedEmployes = $em->getRepository(Employes::class)->findBy(['id' => $employeIds]);
-
-            foreach ($selectedEmployes as $employe) {
-                if (!$chantier->getEmployes()->contains($employe)) {
-                    $chantier->getEmployes()->add($employe);
-                }
-            }
-
-            $em->persist($chantier);
-            $em->flush();
-
-            return $this->redirectToRoute('chantier_edit', ['id' => $chantier->getId()]);
+        if ($this->isCsrfTokenValid('delete'.$chantier->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($chantier);
+            $entityManager->flush();
         }
 
-        return $this->render('chantier/assign.html.twig', [
-            'chantier' => $chantier,
-            'employes' => $employes,
-        ]);
+        return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }
