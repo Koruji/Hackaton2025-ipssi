@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Chantiers{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="p-4 bg-white shadow rounded">
+        <h1 class="fw-bold text-center">Gestion des Chantiers</h1>
+
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <a href="{{ path('app_chantier_test_new') }}" class="btn btn-primary px-4 py-2 rounded-pill">
+                + Ajouter un Chantier
+            </a>
+        </div>
+
+        <table class="table table-bordered text-center bg-white mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chantier in chantiers %}
+                <tr>
+                    <td>{{ chantier.id }}</td>
+                    <td>{{ chantier.nom }}</td>
+                    <td>{{ chantier.adresse }}</td>
+                    <td>{{ chantier.debutTravaux ? chantier.debutTravaux|date('d/m/Y') : '-' }}</td>
+                    <td>{{ chantier.finTravaux ? chantier.finTravaux|date('d/m/Y') : '-' }}</td>
+                    <td>
+                        <span class="badge {% if chantier.status == 'Fini' %}bg-success{% else %}bg-warning{% endif %}">
+                            {{ chantier.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_chantier_test_show', {'id': chantier.id}) }}" class="btn btn-sm btn-info rounded-pill">Détails</a>
+                        <a href="{{ path('app_chantier_test_edit', {'id': chantier.id}) }}" class="btn btn-sm btn-warning rounded-pill">Modifier</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Aucun chantier trouvé</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

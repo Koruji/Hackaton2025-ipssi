@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Chantier{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="p-4 bg-white shadow rounded" style="max-width: 700px; margin: auto;">
+        <h1 class="fw-bold text-center">Détails du Chantier</h1>
+
+        <table class="table table-bordered mt-3">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ chantier.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ chantier.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse</th>
+                    <td>{{ chantier.adresse }}</td>
+                </tr>
+                <tr>
+                    <th>Début des travaux</th>
+                    <td>{{ chantier.debutTravaux ? chantier.debutTravaux|date('d/m/Y') : '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Fin des travaux</th>
+                    <td>{{ chantier.finTravaux ? chantier.finTravaux|date('d/m/Y') : '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        <span class="badge {% if chantier.status == 'Fini' %}bg-success{% else %}bg-warning{% endif %}">
+                            {{ chantier.status }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('app_chantier_test_index') }}" class="btn btn-secondary px-3 py-2 rounded-pill">
+                Retour à la liste
+            </a>
+            <a href="{{ path('app_chantier_test_edit', {'id': chantier.id}) }}" class="btn btn-warning px-3 py-2 rounded-pill">
+                Modifier
+            </a>
+        </div>
+
+        <div class="mt-3 text-center">
+            {{ include('chantier_test/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
+{% endblock %}

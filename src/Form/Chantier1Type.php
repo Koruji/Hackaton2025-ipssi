@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Chantier;
 use App\Entity\Employes;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +24,12 @@ class Chantier1Type extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('status')
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'En cours' => 'En cours',
+                    'Fini' => 'Fini',
+                ],
+            ]);
         ;
     }
 

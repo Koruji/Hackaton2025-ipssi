@@ -1,0 +1,18 @@
+<div class="container d-flex justify-content-center mt-4">
+    <div class="p-4 bg-white shadow rounded" style="width: 50%;">
+        <h1 class="fw-bold text-center">Ajouter un Chantier</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_widget(form) }}
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary px-4 py-2 rounded-pill">{{ button_label|default('Créer') }}</button>
+            </div>
+        {{ form_end(form) }}
+
+        <div class="text-center mt-3">
+            <a href="{{ path('app_admin_chantier') }}" class="btn btn-secondary px-3 py-2 rounded-pill">Retour</a>
+        </div>
+    </div>
+</div>

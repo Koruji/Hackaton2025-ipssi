@@ -1,4 +1,16 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Créer') }}</button>
-{{ form_end(form) }}
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="p-4 bg-white shadow rounded" style="max-width: 500px; width: 100%;">
+        <h1 class="fw-bold text-center mb-4">Créer un Ouvrier</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_widget(form) }}
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary rounded" style="padding: 8px 20px; font-size: 14px;">
+                    {{ button_label|default('Créer') }}
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
