@@ -16,7 +16,9 @@ Ce projet a pour objectif de proposer une solution permettant d’optimiser et d
 
 * Diagrammes de sequence et d'activité [ici](https://drive.google.com/file/d/1OHcY7zAt0x1xkxRy9gAgMLVOXAkk7cat/view?usp=sharing)
 
-* diagramme de classe [ici](https://drive.google.com/file/d/16qTzBTSS8mQe4o87G6G2f8ECVHKsIcWc/view?usp=sharing)
+* Diagramme de classe [ici](https://drive.google.com/file/d/16qTzBTSS8mQe4o87G6G2f8ECVHKsIcWc/view?usp=sharing)
+
+* Maquette figma [ici](https://www.figma.com/design/SpaQJTavWMnomgD2EdFy6m/Hackaton?node-id=0-1&p=f)
 
 ### Pré-requis
 * Connaissance en HTML, CSS, PHP, JS, Symfony

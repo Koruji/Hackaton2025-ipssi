@@ -16,6 +16,11 @@ class CompetenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Competence::class);
     }
 
+    public function findAllCompetences(): array
+    {
+        return $this->findAll();
+    }
+
     //    /**
     //     * @return Competence[] Returns an array of Competence objects
     //     */

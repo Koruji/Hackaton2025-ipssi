@@ -7,4 +7,20 @@
 
     {{ include('chantier/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
 
+    <form method="post">
+        <input type="hidden" name="form_type" value="add_competence">
+
+        <label for="competence">Compétence</label>
+        <select name="competence" id="competence" required>
+            <option value="">-- Sélectionnez une compétence --</option>
+            {% for competence in competences %}
+                <option value="{{ competence.id }}">{{ competence.nom }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Ajouter la compétence</button>
+    </form>
+
+
+
 {% endblock %}

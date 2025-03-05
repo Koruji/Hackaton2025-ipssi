@@ -41,9 +41,16 @@ class Chantier
     #[ORM\ManyToMany(targetEntity: Employes::class)]
     private Collection $employes;
 
+    /**
+     * @var Collection<int, Competence>
+     */
+    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'chantiers')]
+    private Collection $competences;
+
     public function __construct()
     {
         $this->missions = new ArrayCollection();
+        $this->competences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +164,30 @@ class Chantier
     public function removeEmploye(Employe $employe): self
     {
         $this->employes->removeElement($employe);
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Competence>
+     */
+    public function getCompetences(): Collection
+    {
+        return $this->competences;
+    }
+
+    public function addCompetence(Competence $competence): static
+    {
+        if (!$this->competences->contains($competence)) {
+            $this->competences->add($competence);
+        }
+
+        return $this;
+    }
+
+    public function removeCompetence(Competence $competence): static
+    {
+        $this->competences->removeElement($competence);
+
         return $this;
     }
 }

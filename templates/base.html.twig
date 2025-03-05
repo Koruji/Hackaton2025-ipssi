@@ -15,7 +15,7 @@
     </head>
     <body>
     <nav class="navbar sticky-top shadow m-3" style="background-color: #ff863f; opacity: 0.85;">
-        <a class="navbar-brand" style="font-size: 20px;">
+        <a class="navbar-brand" style="font-size: 20px; color: black" href="{{path('app_home_admin')}}">
             <i class="bi bi-building-fill-gear"></i>
             <strong>BatiCrew</strong>
         </a>
@@ -25,6 +25,7 @@
             {% if app.user %}
                 <a href="{{path('app_admin_chantier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des chantiers</a>
                 <a href="{{path('app_admin_ouvrier')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Gestion des ouvriers</a>
+                <a href="{{path('app_competence_index')}}" class="nav-item btn rounded-pill mr-2" style="background-color: white; opacity: 0.85;">Toutes les Competences</a>
                 <a href="{{ path('app_logout') }}" class="nav-item btn rounded-pill" style="background-color: #560202; opacity: 0.85; color: white">Se déconnecter</a>
             {% endif %}
         </div>
