@@ -51,6 +51,15 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
             ->getResult();
     }
 
+    public function findEmployesByRoleOuvrier(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.roles LIKE :role')
+            ->setParameter('role', '%ROLE_USER%')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Employes[] Returns an array of Employes objects
     //     */

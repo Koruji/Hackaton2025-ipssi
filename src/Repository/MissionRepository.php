@@ -16,16 +16,6 @@ class MissionRepository extends ServiceEntityRepository
         parent::__construct($registry, Mission::class);
     }
 
-    public function findEmployesByRoleOuvrier(): array
-    {
-        return $this->createQueryBuilder('e')
-            ->where('e.roles LIKE :role')  
-            ->setParameter('role', '%ouvrier%')  
-            ->getQuery()
-            ->getResult(); 
-    }
-
-
 
     //    /**
     //     * @return Mission[] Returns an array of Mission objects
