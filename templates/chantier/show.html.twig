@@ -11,6 +11,11 @@
                 </div>
                 <div class="col-md-6 text-md-right">
                     <p class="card-text"><strong>Compétences :</strong></p>
+                    <ul>
+                        {% for competence in competences %}
+                            <li>{{ competence }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             {% if ouvriers %}
@@ -46,6 +51,16 @@
             <button class="btn rounded-pill mr-2" style="background-color: #ff863f; opacity: 0.85;"> + Ajouter un ouvrier</button>
         </div>
     </div>
+
+    <h1>Liste des ouvriers possible</h1>
+    <ul>
+        {% for ouvrier_possible in ouvriers_possible %}
+            <li>{{ ouvrier_possible.employe_nom }}</li>
+        {% endfor %}
+    </ul>
+
+
+
 
     <script>
         function goBack() {

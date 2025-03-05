@@ -16,6 +16,19 @@ class CompetenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Competence::class);
     }
 
+    public function findAllEmployesByCompetence(array $required_competences): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('e.nom AS employe_nom')  
+            ->join('c.employes', 'e') 
+            ->where('c.nom IN (:competences)')  
+            ->setParameter('competences', $required_competences)  
+            ->getQuery()
+            ->getArrayResult(); 
+    }
+
+
+
     //    /**
     //     * @return Competence[] Returns an array of Competence objects
     //     */

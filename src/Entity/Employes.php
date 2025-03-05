@@ -44,6 +44,11 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $disponible = null;
 
+     /**
+     * @ORM\ManyToMany(targetEntity=Competence::class, mappedBy="employes")
+     */
+    private Collection $competences;
+
     /**
      * @var Collection<int, Mission>
      */
@@ -225,5 +230,10 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
         $this->competence->removeElement($competence);
 
         return $this;
+    }
+
+    public function getCompetences(): Collection
+    {
+        return $this->competences;
     }
 }
