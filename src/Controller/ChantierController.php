@@ -12,19 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Repository\CompetenceRepository;
+use App\Repository\EmployesRepository;
 use App\Entity\Competence;
 
 final class ChantierController extends AbstractController
 {
 
     #[Route('/chantier/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
-    public function show(EntityManagerInterface $em, $id, CompetenceRepository $competenceRepository): Response
+    public function show(EntityManagerInterface $em, $id, EmployesRepository $employesRepository): Response
     {
         //données statique : à remplacer par les vraies
         $required_competences = ["Électricité", "Travaux de finition"];
 
-        $employes_filtered = $competenceRepository->findAllEmployesByCompetence($required_competences);
+        $employes_filtered = $employesRepository->findAllEmployesByCompetence($required_competences);
 
         $chantier = $em->getRepository(Chantier::class)->find($id);
         $ouvriers = $em->getRepository(Employes::class)->findEmployesByChantierId($id);

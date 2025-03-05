@@ -44,9 +44,11 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $disponible = null;
 
-     /**
-     * @ORM\ManyToMany(targetEntity=Competence::class, mappedBy="employes")
+    /**
+     * @var Collection<int, Competence>
      */
+    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'employes')]
+    #[ORM\JoinTable(name: 'employes_competence')]
     private Collection $competences;
 
     /**
@@ -55,16 +57,11 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Mission::class, mappedBy: 'employe')]
     private Collection $missions;
 
-    /**
-     * @var Collection<int, Competence>
-     */
-    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'employes')]
-    private Collection $competence;
 
     public function __construct()
     {
         $this->missions = new ArrayCollection();
-        $this->competence = new ArrayCollection();
+        $this->competences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,18 +205,15 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Competence>
-     */
-    public function getCompetence(): Collection
+    public function getCompetences(): Collection
     {
-        return $this->competence;
+        return $this->competences;
     }
 
     public function addCompetence(Competence $competence): static
     {
-        if (!$this->competence->contains($competence)) {
-            $this->competence->add($competence);
+        if (!$this->competences->contains($competence)) {
+            $this->competences->add($competence);
         }
 
         return $this;
@@ -227,13 +221,9 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeCompetence(Competence $competence): static
     {
-        $this->competence->removeElement($competence);
+        $this->competences->removeElement($competence);
 
         return $this;
     }
 
-    public function getCompetences(): Collection
-    {
-        return $this->competences;
-    }
 }

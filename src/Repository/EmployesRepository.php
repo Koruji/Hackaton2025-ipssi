@@ -51,6 +51,29 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
             ->getResult();
     }
 
+    public function findAllEmployesByCompetence(array $required_competences): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.nom AS employe_nom, e.id')  
+            ->join('e.competences', 'c')  
+            ->where('c.nom IN (:competences)') 
+            ->setParameter('competences', $required_competences)  
+            ->getQuery()
+            ->getArrayResult();  
+    }
+
+
+    // public function findAllEmployesByCompetence(array $required_competences): array
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->select('e.nom AS employe_nom, e.id')  
+    //         ->join('c.employes', 'e') 
+    //         ->where('c.nom IN (:competences)')  
+    //         ->setParameter('competences', $required_competences)  
+    //         ->getQuery()
+    //         ->getArrayResult(); 
+    // }
+
     //    /**
     //     * @return Employes[] Returns an array of Employes objects
     //     */

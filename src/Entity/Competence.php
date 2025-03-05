@@ -21,7 +21,7 @@ class Competence
     /**
      * @var Collection<int, Employes>
      */
-    #[ORM\ManyToMany(targetEntity: Employes::class, mappedBy: 'competence')]
+    #[ORM\ManyToMany(targetEntity: Employes::class, mappedBy: 'competences')]
     private Collection $employes;
 
     public function __construct()
