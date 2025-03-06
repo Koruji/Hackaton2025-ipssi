@@ -71,6 +71,10 @@ final class ChantierController extends AbstractController
     public function delete(Request $request, Chantier $chantier, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$chantier->getId(), $request->getPayload()->getString('_token'))) {
+            $missions = $chantier->getMissions();
+            foreach ($missions as $mission) {
+                $entityManager->remove($mission);
+            }
             $entityManager->remove($chantier);
             $entityManager->flush();
         }
