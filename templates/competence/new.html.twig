@@ -3,9 +3,12 @@
 {% block title %}New Competence{% endblock %}
 
 {% block body %}
-    <h1>Create new Competence</h1>
+<div class="d-flex justify-content-center">
+    <div class="show-chantier m-4 rounded p-4">
+        <a class="btn rounded-pill" style="background-color: #ff863f; opacity: 0.85;" href="{{ path('app_admin_ouvrier') }}"><i class="bi bi-arrow-left"></i></a>
+        <h3 class="text-center">Ajout d'une nouvelle compétence</h3>
+        {{ include('competence/_form.html.twig') }}
+    </div>
+</div>
 
-    {{ include('competence/_form.html.twig') }}
-
-    <a href="{{ path('app_competence_index') }}">back to list</a>
 {% endblock %}
