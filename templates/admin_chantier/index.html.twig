@@ -18,6 +18,7 @@
             <thead class="thead-light">
                 <tr>
                     <th>Nom</th>
+                    <th>Compétence</th>
                     <th>Adresse</th>
                     <th>Début</th>
                     <th>Fin</th>
@@ -29,6 +30,11 @@
                 {% for chantier in chantiers %}
                 <tr>
                     <td>{{ chantier.nom }}</td>
+                    <td>
+                        {% for competence in chantier.competences %}
+                            {{ competence.nom }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                     <td>{{ chantier.adresse }}</td>
                     <td>{{ chantier.debutTravaux ? chantier.debutTravaux|date('d/m/Y') : '-' }}</td>
                     <td>{{ chantier.finTravaux ? chantier.finTravaux|date('d/m/Y') : '-' }}</td>
