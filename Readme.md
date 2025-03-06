@@ -1,5 +1,7 @@
 # Hackathon Php,Js,Test Unitaire
 
+<img width="953" alt="image" src="https://github.com/user-attachments/assets/5985a019-bee9-4cc6-9bda-50ed9692f11d" />
+
 ## Gestion du Planning des employés d'une société de BTP
 
 Ce projet a pour objectif de proposer une solution permettant d’optimiser et de fiabiliser l'affectation des salariés sur les chantiers. Il vise à éliminer les erreurs de planification tout en facilitant le travail administratif afin de garantir une meilleure gestion RH sur le terrain.
