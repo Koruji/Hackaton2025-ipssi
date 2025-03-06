@@ -7,9 +7,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
@@ -21,7 +23,7 @@
                 <strong>BatiCrew</strong>
             </a>
         {% else %}
-            <a href="/" class="navbar-brand" style="font-size: 20px; text-decoration: none; color: inherit;">
+            <a href="{{ path('app_home') }}" class="navbar-brand" style="font-size: 20px; text-decoration: none; color: inherit;">
                 <i class="bi bi-building-fill-gear"></i>
                 <strong>BatiCrew</strong>
             </a>
