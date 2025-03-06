@@ -15,11 +15,6 @@ class CompetenceType extends AbstractType
     {
         $builder
             ->add('nom')
-            // ->add('employes', EntityType::class, [
-            //     'class' => Employes::class,
-            //     'choice_label' => 'id',
-            //     'multiple' => true,
-            // ])
         ;
     }
 
