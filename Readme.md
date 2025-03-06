@@ -13,25 +13,26 @@ Ce projet a pour objectif de proposer une solution permettant d’optimiser et d
 * Gestion administrative complexe : L'affectation des salariés nécessite une gestion administrative lourde et la moindre erreur peut entraîner des erreurs de planification, affectant ainsi la productivité globale.
 
 ### Fonctionnalités réalisées
-<br> Comme exprimé précédemment, l’entreprise Edifis Pro à besoin d’un outil qui faciliterait sa gestion des plannings de ses employés. Pour répondre à cela, nous avons décidé de développer une solution sous Symfony (très célèbre framework php) qui sera reliée à une base de données relationnelle SQL. <br>
-Afin de mettre en place ce logiciel, nous devons structurer visuellement et par des schémas notre projet. <br>
-(L’ensemble des images présentées ci-dessous sont disponibles dans le dossier … du projet) 
+* Comme exprimé précédemment, l’entreprise Edifis Pro à besoin d’un outil qui faciliterait sa gestion des plannings de ses employés. Pour répondre à cela, nous avons décidé de développer une solution sous Symfony (très célèbre framework php) qui sera reliée à une base de données relationnelle SQL.
 
-<br><br> En premier lieu, le maquettage est là pour donner une ligne de mire au projet. Ci-dessous vous trouverez une proposition de l’ensemble des pages du logiciel BatiCrew. C’est à partir de cela qu’on va pouvoir définir nos diagrammes.
+* Afin de mettre en place ce logiciel, nous devons structurer visuellement et par des schémas notre projet.
+(L’ensemble des images présentées ci-dessous sont disponibles dans le dossier  du projet) 
 
-<br> Maquette figma [ici](https://www.figma.com/design/SpaQJTavWMnomgD2EdFy6m/Hackaton?node-id=0-1&p=f)
+* En premier lieu, le maquettage est là pour donner une ligne de mire au projet. Ci-dessous vous trouverez une proposition de l’ensemble des pages du logiciel BatiCrew. C’est à partir de cela qu’on va pouvoir définir nos diagrammes.
 
-<br> Dans un deuxième temps, le diagramme de cas d’utilisation. Ce dernier nous permet d’avoir un visuel d’ensemble sur les interactions entre les acteurs : l’administration et les ouvriers via BatiCrew.
+* Maquette figma [ici](https://www.figma.com/design/SpaQJTavWMnomgD2EdFy6m/Hackaton?node-id=0-1&p=f)
 
-<br> Diagramme de cas d'utilisation : /diagramme/diagramme_use_case
+* Dans un deuxième temps, le diagramme de cas d’utilisation. Ce dernier nous permet d’avoir un visuel d’ensemble sur les interactions entre les acteurs : l’administration et les ouvriers via BatiCrew.
 
-<br> Troisièmement, l’ensemble des diagrammes de séquence et d’activité qui permettent de voir comment les différentes parties de l’application communiquent entre elles. C’est en quelque sorte le fil rouge du projet pour les parties les plus complexes. 
+* Diagramme de cas d'utilisation : /diagramme/diagramme_use_case
 
-<br> Diagrammes de séquence et d'activité dans le dossier : /diagrammes/diagramme_sequence
+* Troisièmement, l’ensemble des diagrammes de séquence et d’activité qui permettent de voir comment les différentes parties de l’application communiquent entre elles. C’est en quelque sorte le fil rouge du projet pour les parties les plus complexes. 
 
-<br> Et pour finir, le diagramme entité-association de notre base de données. Il s’agit là de la partie la plus importante car elle nous permet de visualiser l’agencement des données et de ce que l’application doit retourner à l’utilisateur. 
+* Diagrammes de séquence et d'activité dans le dossier : /diagrammes/diagramme_sequence
 
-<br> Diagramme de classe dans le dossier : /diagrammes/diagramme_classe
+* Et pour finir, le diagramme entité-association de notre base de données. Il s’agit là de la partie la plus importante car elle nous permet de visualiser l’agencement des données et de ce que l’application doit retourner à l’utilisateur. 
+
+* Diagramme de classe dans le dossier : /diagrammes/diagramme_classe
 
 
 ### Pré-requis
@@ -44,13 +45,13 @@ Afin de mettre en place ce logiciel, nous devons structurer visuellement et par 
 * Penser à définir le port de votre base de donnée dans le ``.env`` -> ``DATABASE_URL``
 * Créez la base de données avec ``symfony console doctrine:database:create``
 * Mettre à jour avec les commandes :
-<br> ``symfony console make:migration``
-<br> ``symfony console doctrine:migrations:migrate``
+* ``symfony console make:migration``
+* ``symfony console doctrine:migrations:migrate``
 * Aller dans le dossier /database/data.sql pour appliquer les valeurs par défaut dans votre BDD.
 * Lancer en local :  ``symfony serve``
 * Utilisez le compte :
-<br> admin@yopmail.com (mot de passe: 123456789) pour se connecter en tant qu'administrateur
-<br> user@yopmail.com (mot de passe: 123456789) pour se connecter en tant qu'ouvrier
+* admin@yopmail.com (mot de passe: 123456789) pour se connecter en tant qu'administrateur
+* nathan@yopmail.com (mot de passe: 123456789) pour se connecter en tant qu'ouvrier
 
 ### Techno utilisés 
 * Symfony
