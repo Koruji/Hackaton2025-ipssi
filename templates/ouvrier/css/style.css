@@ -1,0 +1,30 @@
+body {
+    background-image: url('../image/fond_hckaton.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat; 
+}
+
+
+.fc-button {
+    background-color: #FF863F !important; 
+    border-color: #FF863F !important; 
+    color: white !important; 
+}
+
+/* Effet au survol */
+.fc-button:hover {
+    background-color: #191716 !important;
+    border-color: #e67635 !important;
+}
+
+
+#calendrier {
+    width: 60%;
+    margin: auto;
+    height: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #FF863F;
+    z-index: 10; 
+}
