@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Create new Employes</h1>
-
-    {{ include('employes/_form.html.twig') }}
+<div class="d-flex justify-content-center">
+    <div class="show-chantier m-4 rounded p-4">
+        <a class="btn rounded-pill" style="background-color: #ff863f; opacity: 0.85;" href="{{ path('app_admin_ouvrier') }}"><i class="bi bi-arrow-left"></i></a>
+        <h3 class="text-center">Ajout d'un nouvel ouvrier</h3>
+        {{ include('employes/_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}
