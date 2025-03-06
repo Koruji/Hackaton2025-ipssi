@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Competence{% endblock %}
+
+{% block body %}
+<section style="background-color: white; padding: 20px; margin: 0 60px 0 60px; border-radius: 10px">
+    <div lass="container mt-4">
+        <a class="btn rounded-pill" style="background-color: #ff863f; opacity: 0.85;" href="{{ path('app_competence_index') }}"><i class="bi bi-arrow-left"></i></a>
+    </div>
+    <div class="container mt-4">
+        <div style="text-align: center;"><h3>Modifier la competence</h3></div>
+        
+    </div>
+    <div style="width: 30%">
+            {{ include('competence/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
+</section>
+    
+{% endblock %}

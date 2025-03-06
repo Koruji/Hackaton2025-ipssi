@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Competence index{% endblock %}
+
+{% block body %}
+    <section class="container mt-4" style="text-align: center;">
+        <h1 class="fw-bold text-center">Toutes les competences</h1>
+        <div class="d-flex justify-content-between my-3"><a href="{{ path('app_competence_new') }}" class="btn btn-primary">Nouvelle competence</a></div>
+    
+        <div class="table-container" style="display: flex; justify-content: center;">
+            <table class="table table-bordered text-center bg-white mt-3" style="width: 50%;">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for competence in competences %}
+                    <tr>
+                        <td>{{ competence.nom }}</td>
+                        <td style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+                            <a href="{{ path('app_competence_edit', {'id': competence.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            {{ include('competence/_delete_form.html.twig') }}
+                        </td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+{% endblock %}
