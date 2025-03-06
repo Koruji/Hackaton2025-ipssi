@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Competence;
 use App\Entity\Employes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

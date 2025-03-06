@@ -18,12 +18,22 @@ final class MissionController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
         $mission = new Mission();
-        $chantierAssocie = $entityManager->getRepository(Chantier::class)->find($id);
-        $form = $this->createForm(MissionType::class, $mission);
+        $chantier = $entityManager->getRepository(Chantier::class)->find($id);
+        $competencesChantier = [];
+        foreach ($chantier->getCompetences() as $competence) {
+            array_push($competencesChantier, $competence->getNom());
+        }
+
+        $form = $this->createForm(MissionType::class, $mission, [
+            'competencesChantier' => $competencesChantier,
+            'dateDebut' => $chantier->getDebutTravaux(),
+            'dateFin' => $chantier->getFinTravaux(),
+
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $mission->setChantier($chantierAssocie);
+            $mission->setChantier($chantier);
             $entityManager->persist($mission);
             $entityManager->flush();
 
