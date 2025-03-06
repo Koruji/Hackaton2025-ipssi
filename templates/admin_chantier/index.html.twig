@@ -33,7 +33,7 @@
                     <td>{{ chantier.debutTravaux ? chantier.debutTravaux|date('d/m/Y') : '-' }}</td>
                     <td>{{ chantier.finTravaux ? chantier.finTravaux|date('d/m/Y') : '-' }}</td>
                     <td>
-                        <span class="badge {% if chantier.status == 'Fini' %}bg-success{% else %}bg-warning{% endif %}">
+                        <span class="badge {% if chantier.status == 'Terminé' %}bg-success{% else %}bg-warning{% endif %}">
                             {{ chantier.status }}
                         </span>
                     </td>

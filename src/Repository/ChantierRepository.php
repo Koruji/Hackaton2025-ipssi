@@ -24,7 +24,7 @@ class ChantierRepository extends ServiceEntityRepository
             ->innerJoin('m.chantiers', 'c')
             ->where('c.id = :chantierId')
             ->setParameter('chantierId', $chantierId)
-            ->select('m.nom AS competence_nom', 'm.id AS competence_id', 'c.nom AS chantier_nom')
+            ->select('DISTINCT m.nom AS nom')
             ->getQuery()
             ->getResult();
     }

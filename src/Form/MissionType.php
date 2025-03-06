@@ -19,23 +19,33 @@ class MissionType extends AbstractType
             ->add('dateDebut', null, [
                 'label' => 'Date de début de mission',
                 'widget' => 'single_text',
+                'required' => true,
                 'constraints' => [
                     new Assert\NotBlank([
                         'message' => 'La date de début est requise.',
                     ]),
                 ],
+                'attr' => [
+                    'min' => isset($options['dateDebut']) ? $options['dateDebut']->format('Y-m-d') : null,
+                    'max' => isset($options['dateFin']) ? $options['dateFin']->format('Y-m-d') : null,
+                ],
             ])
             ->add('dateFin', null, [
                 'label' => 'Date de fin de mission',
                 'widget' => 'single_text',
+                'required' => true,
                 'constraints' => [
                     new Assert\NotBlank([
                         'message' => 'La date de fin est requise.',
                     ]),
                     new Assert\GreaterThanOrEqual([
-                        'value' => 'today',
-                        'message' => 'La date de fin doit être supérieure à la date de début.',
+                        'propertyPath' => 'parent.all[dateDebut].data',
+                        'message' => 'La date de fin doit être supérieure ou égale à la date de début.',
                     ]),
+                ],
+                'attr' => [
+                    'min' => isset($options['dateDebut']) ? $options['dateDebut']->format('Y-m-d') : null,
+                    'max' => isset($options['dateFin']) ? $options['dateFin']->format('Y-m-d') : null,
                 ],
             ])
             ->add('employe', EntityType::class, [
@@ -44,12 +54,16 @@ class MissionType extends AbstractType
                 'choice_label' => function(Employes $employes) {
                     return $employes->getNom() . ' ' . $employes->getPrenom();
                 },
-                'query_builder' => function(EmployesRepository $repoEmployes) {
-                    return $repoEmployes->findEmployesByRoleOuvrier();
+                'query_builder' => function(EmployesRepository $repoEmployes) use ($options) {
+                    if (isset($options['dateDebut']) && isset($options['dateFin'])) {
+                        return $repoEmployes->findAvailableEmployes($options['competencesChantier'], $options['dateDebut'], $options['dateFin']);
+                    }
+                    return $repoEmployes->findAll();
                 },
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                    'data-dependent' => 'true',
+                ],
             ])
         ;
     }
@@ -58,6 +72,9 @@ class MissionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Mission::class,
+            'competencesChantier' => null,
+            'dateDebut' => null,
+            'dateFin' => null,
         ]);
     }
 }

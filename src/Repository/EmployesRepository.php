@@ -34,47 +34,49 @@ class EmployesRepository extends ServiceEntityRepository implements PasswordUpgr
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * Récupère tous les employés présents sur un chantier donné avec les informations de dates.
-     *
-     * @param int $chantierId
-     * @return array
-     */
-    public function findEmployesByChantierId(int $chantierId): array
+    //by Soumaya
+    public function findAllEmployesByCompetence(array $required_competences)
     {
         return $this->createQueryBuilder('e')
-            ->innerJoin('e.missions', 'm')
-            ->innerJoin('m.chantier', 'c')
-            ->where('c.id = :chantierId')
-            ->setParameter('chantierId', $chantierId)
-            ->select('e.nom as nomEmploye', 'e.prenom as prenomEmploye', 'm.dateDebut as debutMission', 'm.dateFin as finMission', 'm.id as missionId')
-            ->getQuery()
-            ->getResult();
-    }
-
-
-    public function findAllEmployesByCompetence(array $required_competences): array
-    {
-        return $this->createQueryBuilder('e')
-            ->where('e.roles LIKE :role')
-            ->setParameter('role', '%ROLE_USER%');
+            ->join('e.competence', 'c')
+            ->where('c.nom IN (:competences)')
+            ->setParameter('competences', $required_competences);
     }
 
     public function findEmployesByRole(): array
     {
         return $this->createQueryBuilder('e')
             ->where('e.roles LIKE :role')
-            ->setParameter('role', '%ROLE_USER%') 
+            ->setParameter('role', '%ROLE_USER%')
+            ->innerJoin('e.competence', 'c')
+            ->addSelect('c')
             ->getQuery()
             ->getArrayResult();  
     }
 
 
-    public function findEmployesByRoleOuvrier(): QueryBuilder
+    public function findAvailableEmployes(array $requiredCompetences, \DateTime $dateDebut, \DateTime $dateFin)
     {
         return $this->createQueryBuilder('e')
+            // Rechercher les employés avec le rôle ROLE_USER
             ->where('e.roles LIKE :role')
-            ->setParameter('role', '%ROLE_USER%');
+            ->setParameter('role', '%ROLE_USER%')
+
+            // Faire le lien avec les compétences nécessaire pour le chantier
+            ->innerJoin('e.competence', 'c')
+            ->addSelect('c')
+            ->andWhere('c.nom IN (:competences)')
+            ->setParameter('competences', $requiredCompetences)
+
+            // Exclure les employés qui ont une mission chevauchante
+            ->leftJoin('e.missions', 'm')
+            ->andWhere('e.id NOT IN (
+                SELECT emp.id FROM App\Entity\Employes emp
+                JOIN emp.missions miss
+                WHERE miss.dateDebut < :dateFin AND miss.dateFin > :dateDebut
+            )')
+            ->setParameter('dateDebut', $dateDebut)
+            ->setParameter('dateFin', $dateFin);
     }
 
     //    /**

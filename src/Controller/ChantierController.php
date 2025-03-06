@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Chantier;
 use App\Entity\Employes;
+use App\Entity\Mission;
 use App\Form\ChantierType;
 use App\Repository\ChantierRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,25 +16,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/chantier')]
 final class ChantierController extends AbstractController
 {
-    #[Route('/chantier/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
-    public function show(EntityManagerInterface $em, $id, ChantierRepository $chantierRepository): Response
+    #[Route('/show/{id}', name: 'show_chantier')] //utilisé pour quand on clique sur un chantier dashboard
+    public function show(EntityManagerInterface $em, $id): Response
     {
         $competences = $em->getRepository(Chantier::class)->findCompetencesByChantierId($id);
-
         $chantier = $em->getRepository(Chantier::class)->find($id);
-        $ouvriers = $em->getRepository(Employes::class)->findEmployesByChantierId($id);
+        $missions = $em->getRepository(Mission::class)->findMissionsByChantierId($id);
         return $this->render('chantier/show.html.twig', [
             'chantier' => $chantier,
             'competences' => $competences,
-            'ouvriers' => $ouvriers
-        ]);
-    }
-
-    #[Route(name: 'app_chantier_index', methods: ['GET'])]
-    public function index(ChantierRepository $chantierRepository): Response
-    {
-        return $this->render('chantier/index.html.twig', [
-            'chantiers' => $chantierRepository->findAll(),
+            'missions' => $missions
         ]);
     }
 

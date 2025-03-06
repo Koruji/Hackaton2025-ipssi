@@ -10,10 +10,14 @@
                     <p class="card-text"><strong>Date : </strong>{{ chantier.debutTravaux|date('d/m/Y') }} - {{ chantier.finTravaux|date('d/m/Y') }}</p>
                 </div>
                 <div class="col-md-6 text-md-right">
-                    <p class="card-text"><strong>Compétences :</strong></p>
+                    <p class="card-text"><strong>Compétences :</strong>
+                        {% for competence in competences %}
+                            {{ competence.nom }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
-            {% if ouvriers %}
+            {% if missions %}
             <div class="table-container">
                 <table class="table table-bordered text-center m-4">
                     <thead>
@@ -26,14 +30,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for ouvrier in ouvriers %}
+                    {% for mission in missions %}
                         <tr>
-                            <td>{{ ouvrier.nomEmploye }} {{ ouvrier.prenomEmploye }}</td>
-                            <td>{{ ouvrier.debutMission|date('d/m/Y') }}</td>
-                            <td>{{ ouvrier.finMission|date('d/m/Y') }}</td>
-                            <td></td>
+                            <td>{{ mission.nom }} {{ mission.prenom }}</td>
+                            <td>{{ mission[0].dateDebut|date('d/m/Y') }}</td>
+                            <td>{{ mission[0].dateFin|date('d/m/Y') }}</td>
                             <td>
-                                {{ include('mission/_delete_form.html.twig', {id: ouvrier.missionId}) }}
+                                {% for competence in mission[0].employe.competences %}
+                                    {{ competence.nom }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ include('mission/_delete_form.html.twig', {id: mission[0].id}) }}
                             </td>
                         </tr>
                     {% endfor %}

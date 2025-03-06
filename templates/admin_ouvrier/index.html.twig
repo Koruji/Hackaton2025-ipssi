@@ -17,7 +17,6 @@
                     <th>Prénom</th>
                     <th>Email</th>
                     <th>Compétences</th>
-                    <th>Statut</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -28,14 +27,9 @@
                     <td>{{ employe.prenom }}</td>
                     <td>{{ employe.email }}</td>
                     <td>
-                        {% for competence in employe.getCompetences() %}
+                        {% for competence in employe.competence %}
                             {{ competence.nom }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
-                    </td>
-                    <td>
-                        <span class="badge {% if employe.disponible %}bg-success{% else %}bg-danger{% endif %}">
-                            {% if employe.disponible %} Disponible {% else %} Indisponible {% endif %}
-                        </span>
                     </td>
                     <td>
                         <a href="{{ path('app_employes_edit', {'id': employe.id}) }}" class="btn btn-sm btn-warning">

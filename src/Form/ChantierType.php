@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Chantier;
+use App\Entity\Competence;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -37,7 +40,22 @@ class ChantierType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('status')
+            ->add('competences', EntityType::class, [
+                'class' => Competence::class,
+                'choice_label' => 'nom',
+                'expanded' => true,
+                'multiple' => true,
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'A venir' => 'A venir',
+                    'En cours' => 'En cours',
+                    'Terminé' => 'Terminé',
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
         ;
     }
 

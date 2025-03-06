@@ -16,6 +16,24 @@ class MissionRepository extends ServiceEntityRepository
         parent::__construct($registry, Mission::class);
     }
 
+    /**
+     * Récupère toutes les missions d'un chantier donné avec les informations de dates.
+     *
+     * @param int $chantierId
+     * @return array
+     */
+    public function findMissionsByChantierId(int $chantierId): array
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.chantier', 'c')
+            ->innerJoin('m.employe', 'e')
+            ->leftJoin('e.competence', 'comp')
+            ->where('c.id = :chantierId')
+            ->setParameter('chantierId', $chantierId)
+            ->select('m', 'e.nom', 'e.prenom')
+            ->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return Mission[] Returns an array of Mission objects
