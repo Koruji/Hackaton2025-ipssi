@@ -153,7 +153,7 @@ class Chantier
         return $this->employes;
     }
 
-    public function addEmploye(Employe $employe): self
+    public function addEmploye(Employes $employe): self
     {
         if (!$this->employes->contains($employe)) {
             $this->employes->add($employe);
@@ -161,7 +161,7 @@ class Chantier
         return $this;
     }
 
-    public function removeEmploye(Employe $employe): self
+    public function removeEmploye(Employes $employe): self
     {
         $this->employes->removeElement($employe);
         return $this;
